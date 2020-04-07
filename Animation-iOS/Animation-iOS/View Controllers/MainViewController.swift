@@ -21,12 +21,24 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var commandCollectionView: UICollectionView!
     
+    // MARK: - Properties
+    
+    lazy var testView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.red
+        view.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        
+        return view
+    }()
+    
     // MARK: - Life Cycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initializeCommandCollectionView()
+        
+        playStartAnimation()
     }
     
     // MARK: - Initializing
@@ -34,6 +46,35 @@ class MainViewController: UIViewController {
     private func initializeCommandCollectionView() {
         commandCollectionView.delegate = self
         commandCollectionView.dataSource = self
+    }
+    
+    // MARK: - Actions
+    
+    func playStartAnimation() {
+        let size = CGRect(x: 0, y: 0, width: 40, height: 40)
+        let ring = UIView(frame: size)
+        ring.backgroundColor = UIColor.clear
+        ring.alpha = 0.2
+        ring.clipsToBounds = true
+        ring.layer.cornerRadius = ring.frame.width / 2
+        ring.layer.borderWidth = 4
+        ring.layer.borderColor = UIColor.gray.cgColor
+        ring.center = self.view.center
+        
+        let label = UILabel(frame: CGRect.zero)
+        label.text = "여기를 탭!"
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.sizeToFit()
+        label.center = CGPoint(x: self.view.center.x, y: self.view.center.y - ring.frame.height - 8)
+        
+        self.view.addSubview(ring)
+        self.view.addSubview(label)
+        
+        UIView.animate(withDuration: 0.4, delay: 0, options: [.repeat, .autoreverse, .curveEaseOut], animations: {
+            ring.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+            label.transform = CGAffineTransform(translationX: 0, y: 4)
+        }, completion: nil)
     }
     
 }
