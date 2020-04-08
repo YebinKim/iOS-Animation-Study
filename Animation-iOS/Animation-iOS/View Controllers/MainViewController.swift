@@ -58,7 +58,10 @@ class MainViewController: UIViewController {
         return label
     }()
     
-    var timer: Timer?
+    private var timer: Timer?
+    
+    private let moveValue: CGFloat = 1
+    private let moveDoubleValue: CGFloat = 50
     
     // MARK: - Life Cycles
     
@@ -146,29 +149,53 @@ class MainViewController: UIViewController {
     @objc
     func playUpAnimation() {
         UIView.animate(withDuration: 0.01) {
-            self.testView.transform.ty -= 1
+            self.testView.transform.ty -= self.moveValue
         }
     }
     
     @objc
     func playLeftAnimation() {
         UIView.animate(withDuration: 0.01) {
-            self.testView.transform.tx -= 1
+            self.testView.transform.tx -= self.moveValue
         }
     }
     
     @objc
     func playRightAnimation() {
         UIView.animate(withDuration: 0.01) {
-            self.testView.transform.tx += 1
+            self.testView.transform.tx += self.moveValue
         }
     }
     
     @objc
     func playDownAnimation() {
         UIView.animate(withDuration: 0.01) {
-            self.testView.transform.ty += 1
+            self.testView.transform.ty += self.moveValue
         }
+    }
+    
+    func playDoubleUpAnimation() {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
+            self.testView.transform.ty -= self.moveDoubleValue
+        }, completion: nil)
+    }
+    
+    func playDoubleLeftAnimation() {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
+            self.testView.transform.tx -= self.moveDoubleValue
+        }, completion: nil)
+    }
+    
+    func playDoubleRightAnimation() {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
+            self.testView.transform.tx += self.moveDoubleValue
+        }, completion: nil)
+    }
+    
+    func playDoubleDownAnimation() {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
+            self.testView.transform.ty += self.moveDoubleValue
+        }, completion: nil)
     }
     
     // MARK: - IBActions
@@ -195,6 +222,21 @@ class MainViewController: UIViewController {
     
     @IBAction func arrowButtonTouchUp(_ sender: UIButton) {
         timer?.invalidate()
+    }
+    
+    @IBAction func arrowButtonTouchDownRepeat(_ sender: UIButton) {
+        switch sender {
+        case upButton:
+            playDoubleUpAnimation()
+            case leftButton:
+            playDoubleLeftAnimation()
+            case rightButton:
+            playDoubleRightAnimation()
+            case downButton:
+            playDoubleDownAnimation()
+        default:
+            break
+        }
     }
     
 }
