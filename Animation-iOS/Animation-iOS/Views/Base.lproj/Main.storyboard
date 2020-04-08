@@ -26,6 +26,11 @@
                                             <constraint firstAttribute="width" secondItem="RFN-tL-Cje" secondAttribute="height" multiplier="1:1" id="w6y-Ds-pV0"/>
                                         </constraints>
                                         <state key="normal" image="chevron.up" catalog="system"/>
+                                        <connections>
+                                            <action selector="arrowButtonTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="1aO-bj-xlz"/>
+                                            <action selector="arrowButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9zC-eR-1r8"/>
+                                            <action selector="arrowButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="cUh-mZ-aYd"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZbT-yt-e0E">
                                         <rect key="frame" x="16" y="64" width="32" height="32"/>
@@ -33,6 +38,11 @@
                                             <constraint firstAttribute="width" constant="32" id="KAZ-oM-0c8"/>
                                         </constraints>
                                         <state key="normal" image="chevron.left" catalog="system"/>
+                                        <connections>
+                                            <action selector="arrowButtonTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="cfe-LW-lyr"/>
+                                            <action selector="arrowButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="cAN-kJ-8rr"/>
+                                            <action selector="arrowButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="erR-2h-ile"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U24-Yd-deD">
                                         <rect key="frame" x="64" y="112" width="32" height="32"/>
@@ -40,6 +50,11 @@
                                             <constraint firstAttribute="width" constant="32" id="hYG-IP-4ug"/>
                                         </constraints>
                                         <state key="normal" image="chevron.down" catalog="system"/>
+                                        <connections>
+                                            <action selector="arrowButtonTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="mOF-I3-t3Q"/>
+                                            <action selector="arrowButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0H3-Cv-67t"/>
+                                            <action selector="arrowButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="rDS-MH-u47"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUd-oj-hGT">
                                         <rect key="frame" x="112" y="64" width="32" height="32"/>
@@ -47,6 +62,11 @@
                                             <constraint firstAttribute="width" constant="32" id="4VA-jZ-IE2"/>
                                         </constraints>
                                         <state key="normal" image="chevron.right" catalog="system"/>
+                                        <connections>
+                                            <action selector="arrowButtonTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="I9T-AD-HTl"/>
+                                            <action selector="arrowButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="VLJ-qa-06e"/>
+                                            <action selector="arrowButtonTouchUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XWN-YQ-bz0"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

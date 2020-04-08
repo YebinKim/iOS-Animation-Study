@@ -13,7 +13,7 @@ import UIKit
 class MainViewController: UIViewController {
     
     // MARK: - IBOutlets
-
+    
     @IBOutlet weak var upButton: UIButton!
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -141,6 +141,60 @@ class MainViewController: UIViewController {
             self.testView.alpha = 1.0
             self.testView.transform = CGAffineTransform.identity
         }, completion: nil)
+    }
+    
+    @objc
+    func playUpAnimation() {
+        UIView.animate(withDuration: 0.01) {
+            self.testView.transform.ty -= 1
+        }
+    }
+    
+    @objc
+    func playLeftAnimation() {
+        UIView.animate(withDuration: 0.01) {
+            self.testView.transform.tx -= 1
+        }
+    }
+    
+    @objc
+    func playRightAnimation() {
+        UIView.animate(withDuration: 0.01) {
+            self.testView.transform.tx += 1
+        }
+    }
+    
+    @objc
+    func playDownAnimation() {
+        UIView.animate(withDuration: 0.01) {
+            self.testView.transform.ty += 1
+        }
+    }
+    
+    // MARK: - IBActions
+    
+    @IBAction func arrowButtonTouchDown(_ sender: UIButton) {
+        var action: Selector?
+        
+        switch sender {
+        case upButton:
+            action = #selector(playUpAnimation)
+            case leftButton:
+            action = #selector(playLeftAnimation)
+            case rightButton:
+            action = #selector(playRightAnimation)
+            case downButton:
+            action = #selector(playDownAnimation)
+        default:
+            break
+        }
+        
+        guard action != nil else { return }
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: action!, userInfo: nil, repeats: true)
+    }
+    
+    @IBAction func arrowButtonTouchUp(_ sender: UIButton) {
+        timer?.invalidate()
     }
     
 }
