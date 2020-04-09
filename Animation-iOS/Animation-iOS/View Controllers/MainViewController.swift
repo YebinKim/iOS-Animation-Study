@@ -62,6 +62,10 @@ class MainViewController: UIViewController {
     
     private let moveValue: CGFloat = 1
     private let moveDoubleValue: CGFloat = 50
+    private let rotateValue: CGFloat = 90 * (.pi / 180)
+    
+    private var commandArrays: [UIImage?] = [UIImage(systemName: "rotate.right"),
+                                             UIImage(systemName: "rotate.left")]
     
     // MARK: - Life Cycles
     
@@ -198,6 +202,18 @@ class MainViewController: UIViewController {
         }, completion: nil)
     }
     
+    func playRotationRightAnimation() {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
+            self.testView.transform = self.testView.transform.rotated(by: self.rotateValue)
+        }, completion: nil)
+    }
+    
+    func playRotationLeftAnimation() {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
+            self.testView.transform = self.testView.transform.rotated(by: -self.rotateValue)
+        }, completion: nil)
+    }
+    
     // MARK: - IBActions
     
     @IBAction func arrowButtonTouchDown(_ sender: UIButton) {
@@ -246,11 +262,38 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "commandCell", for: indexPath) as? CommandCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        cell.commandButton.setImage(commandArrays[indexPath.row], for: .normal)
+        cell.delegate = self
+        
+        return cell
+    }
+    
+}
+
+// MARK: - CommandCollectionViewCellDelegate
+
+extension MainViewController: CommandCollectionViewCellDelegate {
+    
+    func commandButtonTapped(_ sender: UIButton) {
+        guard let indexPath = commandCollectionView.indexPathForItem(at: commandCollectionView.convert(sender.center,
+                                                                                                       from: sender.superview)) else { return }
+        
+        switch indexPath.row {
+        case 0:
+            playRotationRightAnimation()
+        case 1:
+            playRotationLeftAnimation()
+        default:
+            break
+        }
     }
     
 }
