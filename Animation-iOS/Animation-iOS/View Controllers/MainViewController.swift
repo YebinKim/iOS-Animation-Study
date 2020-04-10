@@ -63,11 +63,13 @@ class MainViewController: UIViewController {
     private let moveValue: CGFloat = 1
     private let moveDoubleValue: CGFloat = 50
     private let rotateValue: CGFloat = 90 * (.pi / 180)
-    private let scaleValue: CGFloat = 1.2
+    private let scaleUpValue: CGFloat = 1.2
+    private let scaleDownValue: CGFloat = 0.8
     
     private var commandArrays: [UIImage?] = [UIImage(systemName: "rotate.right"),
                                              UIImage(systemName: "rotate.left"),
-                                             UIImage(systemName: "arrow.up.left.and.arrow.down.right")]
+                                             UIImage(systemName: "arrow.up.left.and.arrow.down.right"),
+                                             UIImage(systemName: "arrow.down.right.and.arrow.up.left")]
     
     // MARK: - Life Cycles
     
@@ -218,7 +220,13 @@ class MainViewController: UIViewController {
     
     func playScaleUpAnimation() {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
-            self.testView.transform = self.testView.transform.scaledBy(x: self.scaleValue, y: self.scaleValue)
+            self.testView.transform = self.testView.transform.scaledBy(x: self.scaleUpValue, y: self.scaleUpValue)
+        }, completion: nil)
+    }
+    
+    func playScaleDownAnimation() {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
+            self.testView.transform = self.testView.transform.scaledBy(x: self.scaleDownValue, y: self.scaleDownValue)
         }, completion: nil)
     }
     
@@ -301,6 +309,8 @@ extension MainViewController: CommandCollectionViewCellDelegate {
             playRotationLeftAnimation()
         case 2:
             playScaleUpAnimation()
+        case 3:
+            playScaleDownAnimation()
         default:
             break
         }
