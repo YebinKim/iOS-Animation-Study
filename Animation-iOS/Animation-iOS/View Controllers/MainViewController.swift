@@ -63,9 +63,11 @@ class MainViewController: UIViewController {
     private let moveValue: CGFloat = 1
     private let moveDoubleValue: CGFloat = 50
     private let rotateValue: CGFloat = 90 * (.pi / 180)
+    private let scaleValue: CGFloat = 1.2
     
     private var commandArrays: [UIImage?] = [UIImage(systemName: "rotate.right"),
-                                             UIImage(systemName: "rotate.left")]
+                                             UIImage(systemName: "rotate.left"),
+                                             UIImage(systemName: "arrow.up.left.and.arrow.down.right")]
     
     // MARK: - Life Cycles
     
@@ -214,6 +216,12 @@ class MainViewController: UIViewController {
         }, completion: nil)
     }
     
+    func playScaleUpAnimation() {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
+            self.testView.transform = self.testView.transform.scaledBy(x: self.scaleValue, y: self.scaleValue)
+        }, completion: nil)
+    }
+    
     // MARK: - IBActions
     
     @IBAction func arrowButtonTouchDown(_ sender: UIButton) {
@@ -262,7 +270,7 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return commandArrays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -291,6 +299,8 @@ extension MainViewController: CommandCollectionViewCellDelegate {
             playRotationRightAnimation()
         case 1:
             playRotationLeftAnimation()
+        case 2:
+            playScaleUpAnimation()
         default:
             break
         }
