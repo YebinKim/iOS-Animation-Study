@@ -66,10 +66,31 @@ class MainViewController: UIViewController {
     private let scaleUpValue: CGFloat = 1.2
     private let scaleDownValue: CGFloat = 0.8
     
+    private var isPlayGradient: Bool = false
+    private var currentGradient: Int = 0
+    private lazy var gradient: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        gradient.frame = self.testView.bounds
+        gradient.colors = gradientSet[currentGradient]
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
+        gradient.drawsAsynchronously = true
+        self.testView.layer.addSublayer(gradient)
+        
+        return gradient
+    }()
+    private var gradientSet: [[CGColor]] = [[UIColor.red.cgColor, UIColor.orange.cgColor],
+                                            [UIColor.orange.cgColor, UIColor.yellow.cgColor],
+                                            [UIColor.yellow.cgColor, UIColor.green.cgColor],
+                                            [UIColor.green.cgColor, UIColor.blue.cgColor],
+                                            [UIColor.blue.cgColor, UIColor.purple.cgColor],
+                                            [UIColor.purple.cgColor, UIColor.red.cgColor]]
+    
     private var commandArrays: [UIImage?] = [UIImage(systemName: "rotate.right"),
                                              UIImage(systemName: "rotate.left"),
                                              UIImage(systemName: "arrow.up.left.and.arrow.down.right"),
-                                             UIImage(systemName: "arrow.down.right.and.arrow.up.left")]
+                                             UIImage(systemName: "arrow.down.right.and.arrow.up.left"),
+                                             UIImage(systemName: "paintbrush")]
     
     // MARK: - Life Cycles
     
@@ -128,6 +149,8 @@ class MainViewController: UIViewController {
         }
     }
     
+    // MARK: Add Content
+    
     @objc
     func addTestView(sender: UITapGestureRecognizer) {
         if !startView.isHidden {
@@ -153,6 +176,8 @@ class MainViewController: UIViewController {
             self.testView.transform = CGAffineTransform.identity
         }, completion: nil)
     }
+    
+    // MARK: Moving Animation
     
     @objc
     func playUpAnimation() {
@@ -206,6 +231,8 @@ class MainViewController: UIViewController {
         }, completion: nil)
     }
     
+    // MARK: Rotating Animation
+    
     func playRotationRightAnimation() {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
             self.testView.transform = self.testView.transform.rotated(by: self.rotateValue)
@@ -218,6 +245,8 @@ class MainViewController: UIViewController {
         }, completion: nil)
     }
     
+    // MARK: Scaling Animation
+    
     func playScaleUpAnimation() {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
             self.testView.transform = self.testView.transform.scaledBy(x: self.scaleUpValue, y: self.scaleUpValue)
@@ -228,6 +257,40 @@ class MainViewController: UIViewController {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
             self.testView.transform = self.testView.transform.scaledBy(x: self.scaleDownValue, y: self.scaleDownValue)
         }, completion: nil)
+    }
+    
+    // MARK: Color Change Animation
+    func playColorChangeAnimation(_ play: Bool) {
+        if play {
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(changedGradation), userInfo: nil, repeats: true)
+        } else {
+            timer?.invalidate()
+            gradient.colors = gradientSet[currentGradient]
+        }
+    }
+    
+    @objc
+    private func changedGradation() {
+        if currentGradient < gradientSet.count - 1 {
+            currentGradient += 1
+        } else {
+            currentGradient = 0
+        }
+        
+        let colorChange = CABasicAnimation(keyPath: "colors")
+        colorChange.toValue = gradientSet[currentGradient]
+        
+        let positionChange = CABasicAnimation(keyPath: "startPoint")
+        positionChange.fromValue = CGPoint(x: 1.0, y: 1.0)
+        positionChange.toValue = CGPoint(x: 0.0, y: 0.0)
+        
+        let groupAnimation = CAAnimationGroup()
+        groupAnimation.animations = [colorChange, positionChange]
+        groupAnimation.duration = 1.0
+        groupAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        groupAnimation.isRemovedOnCompletion = false
+        
+        gradient.add(groupAnimation, forKey: "groupAnimation")
     }
     
     // MARK: - IBActions
@@ -311,6 +374,10 @@ extension MainViewController: CommandCollectionViewCellDelegate {
             playScaleUpAnimation()
         case 3:
             playScaleDownAnimation()
+        case 4:
+            isPlayGradient = !isPlayGradient
+            sender.isSelected = isPlayGradient
+            playColorChangeAnimation(sender.isSelected)
         default:
             break
         }
