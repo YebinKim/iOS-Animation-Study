@@ -13,7 +13,6 @@ import UIKit
 class MainViewController: UIViewController {
     
     // MARK: - IBOutlets
-    
     @IBOutlet weak var upButton: UIButton!
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
@@ -22,7 +21,6 @@ class MainViewController: UIViewController {
     @IBOutlet weak var commandCollectionView: UICollectionView!
     
     // MARK: - Properties
-    
     lazy var testView: UIView = {
         let view = UIView()
         view.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
@@ -90,10 +88,10 @@ class MainViewController: UIViewController {
                                              UIImage(systemName: "rotate.left"),
                                              UIImage(systemName: "arrow.up.left.and.arrow.down.right"),
                                              UIImage(systemName: "arrow.down.right.and.arrow.up.left"),
-                                             UIImage(systemName: "paintbrush")]
+                                             UIImage(systemName: "paintbrush"),
+                                             UIImage(systemName: "hammer")]
     
     // MARK: - Life Cycles
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -105,7 +103,6 @@ class MainViewController: UIViewController {
     }
     
     // MARK: - Initializing
-    
     private func initializeCommandCollectionView() {
         commandCollectionView.delegate = self
         commandCollectionView.dataSource = self
@@ -117,7 +114,6 @@ class MainViewController: UIViewController {
     }
     
     // MARK: - Actions
-    
     func playStartAnimation() {
         self.view.addSubview(startView)
         self.view.addSubview(startLabel)
@@ -150,7 +146,6 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Add Content
-    
     @objc
     func addTestView(sender: UITapGestureRecognizer) {
         if !startView.isHidden {
@@ -178,7 +173,6 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Moving Animation
-    
     @objc
     func playUpAnimation() {
         UIView.animate(withDuration: 0.01) {
@@ -232,7 +226,6 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Rotating Animation
-    
     func playRotationRightAnimation() {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
             self.testView.transform = self.testView.transform.rotated(by: self.rotateValue)
@@ -246,7 +239,6 @@ class MainViewController: UIViewController {
     }
     
     // MARK: Scaling Animation
-    
     func playScaleUpAnimation() {
         UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: [.curveEaseOut], animations: {
             self.testView.transform = self.testView.transform.scaledBy(x: self.scaleUpValue, y: self.scaleUpValue)
@@ -293,8 +285,20 @@ class MainViewController: UIViewController {
         gradient.add(groupAnimation, forKey: "groupAnimation")
     }
     
-    // MARK: - IBActions
+    // MARK: Shake Animation
+    func playShakeAnimation() {
+        let positionChange = CABasicAnimation(keyPath: "position")
+        positionChange.duration = 0.05
+        positionChange.repeatCount = 4
+        positionChange.autoreverses = true
+        positionChange.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        positionChange.fromValue = NSValue(cgPoint: CGPoint(x: testView.center.x - 10, y: testView.center.y))
+        positionChange.toValue = NSValue(cgPoint: CGPoint(x: testView.center.x + 10, y: testView.center.y))
+        
+        testView.layer.add(positionChange, forKey: "position")
+    }
     
+    // MARK: - IBActions
     @IBAction func arrowButtonTouchDown(_ sender: UIButton) {
         var action: Selector?
         
@@ -337,7 +341,6 @@ class MainViewController: UIViewController {
 }
 
 // MARK: - UICollectionView Delegate, UICollectionView DataSource
-
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -358,7 +361,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 }
 
 // MARK: - CommandCollectionViewCellDelegate
-
 extension MainViewController: CommandCollectionViewCellDelegate {
     
     func commandButtonTapped(_ sender: UIButton) {
@@ -378,6 +380,8 @@ extension MainViewController: CommandCollectionViewCellDelegate {
             isPlayGradient = !isPlayGradient
             sender.isSelected = isPlayGradient
             playColorChangeAnimation(sender.isSelected)
+        case 5:
+            playShakeAnimation()
         default:
             break
         }
