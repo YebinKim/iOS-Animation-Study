@@ -287,13 +287,10 @@ class MainViewController: UIViewController {
     
     // MARK: Shake Animation
     func playShakeAnimation() {
-        let positionChange = CABasicAnimation(keyPath: "position")
-        positionChange.duration = 0.05
-        positionChange.repeatCount = 4
-        positionChange.autoreverses = true
+        let positionChange = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        positionChange.duration = 0.5
         positionChange.timingFunction = CAMediaTimingFunction(name: .easeOut)
-        positionChange.fromValue = NSValue(cgPoint: CGPoint(x: testView.center.x - 10, y: testView.center.y))
-        positionChange.toValue = NSValue(cgPoint: CGPoint(x: testView.center.x + 10, y: testView.center.y))
+        positionChange.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0]
         
         testView.layer.add(positionChange, forKey: "position")
     }
