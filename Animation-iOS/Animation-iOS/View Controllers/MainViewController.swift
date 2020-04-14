@@ -66,6 +66,16 @@ class MainViewController: UIViewController {
     
     private var isPlayGradient: Bool = false
     private var currentGradient: Int = 0
+    private var gradientStartPoint: CGPoint = CGPoint(x: 0.0, y: 0.0) {
+        didSet {
+            gradient.startPoint = gradientStartPoint
+        }
+    }
+    private var gradientEndPoint: CGPoint = CGPoint(x: 1.0, y: 1.0){
+        didSet {
+            gradient.endPoint = gradientEndPoint
+        }
+    }
     private lazy var gradient: CAGradientLayer = {
         let gradient = CAGradientLayer()
         gradient.frame = self.testView.bounds
@@ -86,10 +96,23 @@ class MainViewController: UIViewController {
     
     private var commandArrays: [UIImage?] = [UIImage(systemName: "rotate.right"),
                                              UIImage(systemName: "rotate.left"),
+                                             UIImage(systemName: "paintbrush"),
                                              UIImage(systemName: "arrow.up.left.and.arrow.down.right"),
                                              UIImage(systemName: "arrow.down.right.and.arrow.up.left"),
-                                             UIImage(systemName: "paintbrush"),
-                                             UIImage(systemName: "hammer")]
+                                             UIImage(systemName: "hammer"),
+                                             UIImage(systemName: "flip.horizontal")]
+    
+    private var isFlipHorizontal: Bool = false {
+        didSet {
+            if isFlipHorizontal {
+                gradientStartPoint = CGPoint(x: 1.0, y: 0.0)
+                gradientEndPoint = CGPoint(x: 0.0, y: 1.0)
+            } else {
+                gradientStartPoint = CGPoint(x: 0.0, y: 0.0)
+                gradientEndPoint = CGPoint(x: 1.0, y: 1.0)
+            }
+        }
+    }
     
     // MARK: - Life Cycles
     override func viewDidLoad() {
@@ -273,8 +296,8 @@ class MainViewController: UIViewController {
         colorChange.toValue = gradientSet[currentGradient]
         
         let positionChange = CABasicAnimation(keyPath: "startPoint")
-        positionChange.fromValue = CGPoint(x: 1.0, y: 1.0)
-        positionChange.toValue = CGPoint(x: 0.0, y: 0.0)
+        positionChange.fromValue = gradientEndPoint
+        positionChange.toValue = gradientStartPoint
         
         let groupAnimation = CAAnimationGroup()
         groupAnimation.animations = [colorChange, positionChange]
@@ -293,6 +316,13 @@ class MainViewController: UIViewController {
         positionChange.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0]
         
         testView.layer.add(positionChange, forKey: "position")
+    }
+    
+    // MARK: Flip Animation
+    func playFlipHorizontalAnimation() {
+        UIView.transition(with: testView, duration: 1, options: .transitionFlipFromLeft, animations: nil, completion: { _ in
+            self.isFlipHorizontal = !self.isFlipHorizontal
+        })
     }
     
     // MARK: - IBActions
@@ -370,15 +400,17 @@ extension MainViewController: CommandCollectionViewCellDelegate {
         case 1:
             playRotationLeftAnimation()
         case 2:
-            playScaleUpAnimation()
-        case 3:
-            playScaleDownAnimation()
-        case 4:
             isPlayGradient = !isPlayGradient
             sender.isSelected = isPlayGradient
             playColorChangeAnimation(sender.isSelected)
+        case 3:
+            playScaleUpAnimation()
+        case 4:
+            playScaleDownAnimation()
         case 5:
             playShakeAnimation()
+        case 6:
+            playFlipHorizontalAnimation()
         default:
             break
         }
