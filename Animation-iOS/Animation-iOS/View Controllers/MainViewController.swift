@@ -94,19 +94,34 @@ class MainViewController: UIViewController {
                                             [UIColor.blue.cgColor, UIColor.purple.cgColor],
                                             [UIColor.purple.cgColor, UIColor.red.cgColor]]
     
-    private var commandArrays: [UIImage?] = [UIImage(systemName: "rotate.right"),
-                                             UIImage(systemName: "rotate.left"),
-                                             UIImage(systemName: "paintbrush"),
-                                             UIImage(systemName: "arrow.up.left.and.arrow.down.right"),
-                                             UIImage(systemName: "arrow.down.right.and.arrow.up.left"),
-                                             UIImage(systemName: "hammer"),
-                                             UIImage(systemName: "flip.horizontal")]
+    private lazy var commandArrays: [UIImage?] = [UIImage(systemName: "rotate.right"),
+                                                  UIImage(systemName: "rotate.left"),
+                                                  UIImage(systemName: "paintbrush"),
+                                                  UIImage(systemName: "arrow.up.left.and.arrow.down.right"),
+                                                  UIImage(systemName: "arrow.down.right.and.arrow.up.left"),
+                                                  UIImage(systemName: "hammer"),
+                                                  UIImage(systemName: "flip.horizontal"),
+                                                  UIImage(systemName: "flip.horizontal")?.rotate(-(.pi / 2))]
+    
+    private var isShapeCircle: Bool = false
     
     private var isFlipHorizontal: Bool = false {
         didSet {
             if isFlipHorizontal {
                 gradientStartPoint = CGPoint(x: 1.0, y: 0.0)
                 gradientEndPoint = CGPoint(x: 0.0, y: 1.0)
+            } else {
+                gradientStartPoint = CGPoint(x: 0.0, y: 0.0)
+                gradientEndPoint = CGPoint(x: 1.0, y: 1.0)
+            }
+        }
+    }
+    
+    private var isFlipVertical: Bool = false {
+        didSet {
+            if isFlipVertical {
+                gradientStartPoint = CGPoint(x: 0.0, y: 1.0)
+                gradientEndPoint = CGPoint(x: 1.0, y: 0.0)
             } else {
                 gradientStartPoint = CGPoint(x: 0.0, y: 0.0)
                 gradientEndPoint = CGPoint(x: 1.0, y: 1.0)
@@ -122,6 +137,7 @@ class MainViewController: UIViewController {
         
         addGestureRecognizers()
         
+        gradient.colors = gradientSet[currentGradient]
         playStartAnimation()
     }
     
@@ -325,6 +341,12 @@ class MainViewController: UIViewController {
         })
     }
     
+    func playFlipVerticalAnimation() {
+        UIView.transition(with: testView, duration: 1, options: .transitionFlipFromTop, animations: nil, completion: { _ in
+            self.isFlipVertical = !self.isFlipVertical
+        })
+    }
+    
     // MARK: - IBActions
     @IBAction func arrowButtonTouchDown(_ sender: UIButton) {
         var action: Selector?
@@ -411,6 +433,8 @@ extension MainViewController: CommandCollectionViewCellDelegate {
             playShakeAnimation()
         case 6:
             playFlipHorizontalAnimation()
+        case 7:
+            playFlipVerticalAnimation()
         default:
             break
         }
