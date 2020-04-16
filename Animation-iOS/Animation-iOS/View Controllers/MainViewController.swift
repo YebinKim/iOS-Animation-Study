@@ -101,7 +101,8 @@ class MainViewController: UIViewController {
                                                   UIImage(systemName: "arrow.down.right.and.arrow.up.left"),
                                                   UIImage(systemName: "hammer"),
                                                   UIImage(systemName: "flip.horizontal"),
-                                                  UIImage(systemName: "flip.horizontal")?.rotate(-(.pi / 2))]
+                                                  UIImage(systemName: "flip.horizontal")?.rotate(-(.pi / 2)),
+                                                  UIImage(systemName: "star")]
     
     private var isShapeCircle: Bool = false
     
@@ -176,14 +177,6 @@ class MainViewController: UIViewController {
         })
     }
     
-    private func changeTestViewShape(_ randNum: Int) {
-        if randNum == 1 {
-            testView.layer.cornerRadius = testView.frame.width / 2
-        } else {
-            testView.layer.cornerRadius = 0
-        }
-    }
-    
     // MARK: Add Content
     @objc
     func addTestView(sender: UITapGestureRecognizer) {
@@ -193,10 +186,6 @@ class MainViewController: UIViewController {
         
         guard sender.state == .ended else { return }
         testView.removeFromSuperview()
-        
-        let randNum = Int.random(in: 1...10)
-        changeTestViewShape(randNum)
-        
         self.view.addSubview(testView)
         
         let touchLocation: CGPoint = sender.location(in: self.view)
@@ -347,6 +336,27 @@ class MainViewController: UIViewController {
         })
     }
     
+    // MARK: Shape Change Animation
+    func playShapeChangeAnimation() {
+        isShapeCircle = !isShapeCircle
+        
+        let shapeChange = CABasicAnimation(keyPath: "cornerRadius")
+        shapeChange.duration = 0.5
+        shapeChange.fillMode = .forwards
+        shapeChange.isRemovedOnCompletion = false
+        shapeChange.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        
+        if isShapeCircle {
+            shapeChange.fromValue = 0
+            shapeChange.toValue = testView.bounds.width / 2
+        } else {
+            shapeChange.fromValue = testView.bounds.width / 2
+            shapeChange.toValue = 0
+        }
+        
+        testView.layer.add(shapeChange, forKey: "shape")
+    }
+    
     // MARK: - IBActions
     @IBAction func arrowButtonTouchDown(_ sender: UIButton) {
         var action: Selector?
@@ -435,6 +445,8 @@ extension MainViewController: CommandCollectionViewCellDelegate {
             playFlipHorizontalAnimation()
         case 7:
             playFlipVerticalAnimation()
+        case 8:
+            playShapeChangeAnimation()
         default:
             break
         }
