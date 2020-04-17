@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		441D526E244C3F3C00834E92 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D526D244C3F3C00834E92 /* UIImage+Extension.swift */; };
+		441D5270244C496400834E92 /* MainViewController+Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441D526F244C496400834E92 /* MainViewController+Animations.swift */; };
 		44399AFF243F4CA200A1B3D6 /* CommandCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44399AFE243F4CA200A1B3D6 /* CommandCollectionViewCell.swift */; };
 		44C5DC90243CB01A000C6236 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C5DC8F243CB01A000C6236 /* AppDelegate.swift */; };
 		44C5DC92243CB01A000C6236 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C5DC91243CB01A000C6236 /* SceneDelegate.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		441D526D244C3F3C00834E92 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		441D526F244C496400834E92 /* MainViewController+Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Animations.swift"; sourceTree = "<group>"; };
 		44399AFE243F4CA200A1B3D6 /* CommandCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandCollectionViewCell.swift; sourceTree = "<group>"; };
 		44C5DC8C243CB01A000C6236 /* Animation-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Animation-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44C5DC8F243CB01A000C6236 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				44C5DC93243CB01A000C6236 /* MainViewController.swift */,
+				441D526F244C496400834E92 /* MainViewController+Animations.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			files = (
 				44399AFF243F4CA200A1B3D6 /* CommandCollectionViewCell.swift in Sources */,
 				44C5DC94243CB01A000C6236 /* MainViewController.swift in Sources */,
+				441D5270244C496400834E92 /* MainViewController+Animations.swift in Sources */,
 				441D526E244C3F3C00834E92 /* UIImage+Extension.swift in Sources */,
 				44C5DC90243CB01A000C6236 /* AppDelegate.swift in Sources */,
 				44C5DC92243CB01A000C6236 /* SceneDelegate.swift in Sources */,
