@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,6 +26,7 @@
                                             <constraint firstAttribute="width" constant="32" id="A1l-Ji-c9l"/>
                                             <constraint firstAttribute="width" secondItem="RFN-tL-Cje" secondAttribute="height" multiplier="1:1" id="w6y-Ds-pV0"/>
                                         </constraints>
+                                        <color key="tintColor" name="buttonColor"/>
                                         <state key="normal" image="chevron.up" catalog="system"/>
                                         <connections>
                                             <action selector="arrowButtonTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="1aO-bj-xlz"/>
@@ -38,6 +40,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="KAZ-oM-0c8"/>
                                         </constraints>
+                                        <color key="tintColor" name="buttonColor"/>
                                         <state key="normal" image="chevron.left" catalog="system"/>
                                         <connections>
                                             <action selector="arrowButtonTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="cfe-LW-lyr"/>
@@ -51,6 +54,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="hYG-IP-4ug"/>
                                         </constraints>
+                                        <color key="tintColor" name="buttonColor"/>
                                         <state key="normal" image="chevron.down" catalog="system"/>
                                         <connections>
                                             <action selector="arrowButtonTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="mOF-I3-t3Q"/>
@@ -64,6 +68,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="32" id="4VA-jZ-IE2"/>
                                         </constraints>
+                                        <color key="tintColor" name="buttonColor"/>
                                         <state key="normal" image="chevron.right" catalog="system"/>
                                         <connections>
                                             <action selector="arrowButtonTouchDown:" destination="BYZ-38-t0r" eventType="touchDown" id="I9T-AD-HTl"/>
@@ -114,6 +119,7 @@
                                                         <constraint firstAttribute="width" secondItem="f70-Al-ohJ" secondAttribute="height" multiplier="1:1" id="TuN-a1-c3K"/>
                                                         <constraint firstAttribute="width" constant="30" id="v2j-vT-COa"/>
                                                     </constraints>
+                                                    <color key="tintColor" name="buttonColor"/>
                                                     <connections>
                                                         <action selector="commandButtonTapped:" destination="IO8-a9-IC2" eventType="touchUpInside" id="Cbc-xJ-f53"/>
                                                     </connections>
@@ -139,9 +145,9 @@
                             <constraint firstItem="oiQ-Ai-9e9" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.36" id="0RS-D2-mri"/>
                             <constraint firstItem="boh-kc-ZKT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-32" id="96N-xd-O2u"/>
                             <constraint firstItem="oiQ-Ai-9e9" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.15" id="Dcf-VH-yQT"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="boh-kc-ZKT" secondAttribute="bottom" constant="32" id="J96-RJ-ffC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="oiQ-Ai-9e9" secondAttribute="bottom" constant="32" id="OR0-Ce-Ffw"/>
                             <constraint firstItem="boh-kc-ZKT" firstAttribute="width" secondItem="oiQ-Ai-9e9" secondAttribute="width" id="SQF-Kc-ZjF"/>
+                            <constraint firstItem="boh-kc-ZKT" firstAttribute="centerY" secondItem="oiQ-Ai-9e9" secondAttribute="centerY" id="gkn-5Q-OVa"/>
                             <constraint firstItem="oiQ-Ai-9e9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="vdd-6b-d6K"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -175,5 +181,8 @@
         <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="chevron.right" catalog="system" width="96" height="128"/>
         <image name="chevron.up" catalog="system" width="128" height="72"/>
+        <namedColor name="buttonColor">
+            <color red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

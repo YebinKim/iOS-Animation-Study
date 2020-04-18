@@ -50,6 +50,7 @@ class MainViewController: UIViewController {
         label.text = "여기를 탭!"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = UIColor(named: "labelColor")
         label.sizeToFit()
         label.center = CGPoint(x: self.view.center.x, y: self.view.center.y - startView.frame.height - 8)
         
